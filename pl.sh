@@ -1,0 +1,1 @@
+gcc philosophers.c -o out && ./out
