@@ -1,0 +1,1 @@
+gcc teori.c -o teori && ./teori

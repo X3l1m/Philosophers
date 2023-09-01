@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/selo/codam/Philosophers",
-      "program": "/home/selo/codam/Philosophers/build/Debug/outDebug",
+      "cwd": "/mnt/d/code/codam/Philosophers",
+      "program": "/mnt/d/code/codam/Philosophers/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
