@@ -19,7 +19,7 @@ void	s_sleep(long time)
 
 	start = gettime();
 	while (gettime() - start < time)
-		usleep(100);
+		usleep(250);
 }
 
 int	check_die(t_thread_data *data)
@@ -36,7 +36,7 @@ int	check_die(t_thread_data *data)
 void	print(t_thread_data *data, size_t time, char *str)
 {
 	pthread_mutex_lock(&data->shared->fork[data->shared->p_count]); 
-	printf("%ld %d %s\n", time, data->id, str);
+	printf("%ld %d %s\n", run_time(data->shared->start_time), data->id, str);
 	pthread_mutex_unlock(&data->shared->fork[data->shared->p_count]);
 }
 
@@ -50,7 +50,7 @@ void *philo_thread(void* arg)
 	left = (data->id == 1) ? data->shared->p_count : data->id - 1;
 	pthread_mutex_lock(&data->shared->fork[data->shared->p_count]);
 	pthread_mutex_unlock(&data->shared->fork[data->shared->p_count]);
-	if (data->id % 2)
+	if (!data->id % 2)
 		s_sleep(data->shared->t_eat / 2);
 	data->l_eat = data->shared->start_time;
 	while (1)
@@ -76,16 +76,21 @@ void *philo_thread(void* arg)
 
 int main(int argc, char **argv)
 {
+	int				i;
+	pthread_t		print_t;
 	t_shared_data	shared;
 	t_thread_data	*thread;
-	int		i;
-	char *domates = "hello";
+
+/* 	shared.p_count = 5;
+	shared.t_die = 1000;
+	shared.t_eat = 300;
+	shared.t_sleep = 300; */
 
 	if (argc != 5 && argc != 6)
-		return(printf("wrong input\n"));
+		return(printf("Wrong input\n"));
 
 	if(!input_init(&shared, argv, argc))
-		return (printf("Invalid input"));
+		return (printf("Invalid Number\n"));
 
 	shared.fork = malloc(sizeof(pthread_mutex_t) * (shared.p_count + 1));
 	shared.thread_id = malloc(sizeof(pthread_t) * shared.p_count);
@@ -104,6 +109,7 @@ int main(int argc, char **argv)
 		pthread_create(&shared.thread_id[i], NULL, philo_thread, &thread[i]);
 		i++;
 	}
+	pthread_create(&print_t, NULL, printer, &shared);
 	shared.start_time = gettime();
 	pthread_mutex_unlock(&shared.fork[shared.p_count]);
 	i = 0;

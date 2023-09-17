@@ -9,6 +9,14 @@
 # include <pthread.h>
 # include <limits.h>
 
+typedef struct s_print
+{
+	long			ms;
+	int				i;
+	char			s[20];
+	struct s_print	*next;
+}	t_print;
+
 typedef struct s_shared_data
 {
 	int				p_count;
@@ -18,6 +26,7 @@ typedef struct s_shared_data
 	int				must_eat;
 	int				die;
 	size_t			start_time;
+	t_print			*print_l;
 	pthread_mutex_t	*fork;
 	pthread_t		*thread_id;
 }				t_shared_data;
@@ -32,6 +41,7 @@ typedef struct s_thread_data
 
 int	input_init(t_shared_data *shared, char **argv, int argc);
 int	char_to_int(char *str);
+int	printer(void);
 
 #endif
 
