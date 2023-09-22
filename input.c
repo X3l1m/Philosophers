@@ -20,7 +20,7 @@ int	char_to_int(char *str)
 	return (num);
 }
 
-int	input_init(t_shared_data *shared, char **argv, int argc)
+int	input_init(t_shr_data *shared, char **argv, int argc)
 {
 	shared->p_count = char_to_int(argv[1]);
 	if (!shared->p_count)
@@ -41,5 +41,6 @@ int	input_init(t_shared_data *shared, char **argv, int argc)
 		if(!shared->must_eat)
 			return(0);
 	}
+	shared->end = 0;
 	return (1);
 }
