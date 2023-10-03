@@ -189,8 +189,10 @@ int	philo_create(t_shr_data *shared)
 		if (pthread_mutex_init(&shared->thr[i].p_lock, NULL)
 			|| pthread_mutex_init(&shared->thr[i].e_lock, NULL)
 			|| pthread_create(&shared->thread_id[i], NULL, philo_thread, &shared->thr[i]))
+		{
+			printf("Philo create failed!\n");
 			return(free_all(shared, 3));
-			//destroy mutex
+		}
 	}
 	i = -1;
 	while (++i < shared->p_count)
