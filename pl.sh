@@ -8,7 +8,7 @@ t_eat=$3
 t_sleep=$4
 must_eat=$5
 
-gcc philosophers.c input.c printer.c -o philo
+gcc philosophers.c input.c printer.c check_die.c -o philo
 
 for ((i=0;i<$loop;i++))
 do

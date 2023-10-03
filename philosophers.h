@@ -50,8 +50,12 @@ int		input_init(t_shr_data *shared, char **argv, int argc);
 int		char_to_int(char *str);
 void	*printer(void *arg);
 size_t	gettime(void);
-void	print(t_thr_data *thread, size_t time, char *str);
+int		print(t_thr_data *thread, size_t time, char *str);
 size_t	run_time(size_t start_time);
+void	check_die(t_shr_data *shared);
+void	free_node(t_print **node);
+int		free_all(t_shr_data *shared, int step);
+
 
 #endif
 

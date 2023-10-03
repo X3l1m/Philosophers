@@ -7,7 +7,7 @@ int	find_node(t_shr_data *shared)
 	i = 0;
 	while (1)
 	{
-		if (i = shared->p_count)
+		if (i == shared->p_count)
 			i = 0;
 		if (shared->thr[i].p_head)
 			break;
@@ -58,6 +58,15 @@ int	check_eat(t_shr_data *shared, char *msg, int m)
 	return (1);
 }
 
+void	free_node(t_print **node)
+{
+	t_print *tmp;
+
+	tmp = *node;
+	*node = (*node)->next;
+	free(tmp);
+}
+
 int	print_min(t_shr_data *s)
 {
 	int		m;
@@ -71,18 +80,10 @@ int	print_min(t_shr_data *s)
 		check_eat(s, s->thr[m].p_head->msg, m))
 		s->end = 1;
 	pthread_mutex_lock(&s->thr[m].p_lock);
-	if (s->thr[m].p_head->next)
-	{
-		tmp = s->thr[m].p_head;
-		s->thr[m].p_head = s->thr[m].p_head->next;
-		free(tmp);
-	}
-	else
-	{
-		free(s->thr[m].p_head);
-		s->thr[m].p_head = NULL;
-	}
+	free_node(&s->thr[m].p_head);
 	pthread_mutex_unlock(&s->thr[m].p_lock);
+	if (s->end)
+		free_all(s, 1);
 	return (0);
 }
 
@@ -97,4 +98,5 @@ void	*printer(void *arg)
 		usleep(1000);
 		print_min(shared);
 	}
+	pthread_exit(NULL);
 }
