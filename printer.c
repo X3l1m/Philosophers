@@ -78,12 +78,10 @@ int	print_min(t_shr_data *s)
 		s->thr[m].p_head->id + 1, s->thr[m].p_head->msg);
 	if (*s->thr[m].p_head->msg == 'd' ||
 		check_eat(s, s->thr[m].p_head->msg, m))
-		s->end = 1;
+		s->end = 2;
 	pthread_mutex_lock(&s->thr[m].p_lock);
 	free_node(&s->thr[m].p_head);
 	pthread_mutex_unlock(&s->thr[m].p_lock);
-	if (s->end)
-		free_all(s, 1);
 	return (0);
 }
 
@@ -93,7 +91,7 @@ void	*printer(void *arg)
 	size_t		cur_time;
 
 	shared = (t_shr_data*)arg;
-	while (!shared->end)
+	while (shared->end < 2)
 	{
 		usleep(1000);
 		print_min(shared);

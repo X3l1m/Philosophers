@@ -143,15 +143,11 @@ int	free_all(t_shr_data *shared, int step)
 	int		i;
 	t_print	*tmp;
 
+	i = -1;
 	if (step >= 4)
-	{
-		i = -1;
 		while (shared->p_count > ++i)
-		{
 			while (shared->thr[i].p_head)
 				free_node(&shared->thr[i].p_head);
-		}
-	}
 	if (step >= 1)
 		free(shared->thr);
 	if (step >= 2)
@@ -214,12 +210,12 @@ int main(int argc, char **argv)
 	if(!input_init(&shared, argv, argc))
 		return (printf("Invalid Number!\n"));
 	if (free_all(&shared, make_malloc(&shared)) >= 0)
-		return(printf("!!!Malloc fail!!!\n"));
+		return(printf("!!!make malloc failed!!!\n"));
 	i = -1;
 	while (++i <= shared.p_count)
 	{
 		if(pthread_mutex_init(&shared.fork[i], NULL))
-			return(free_all(&shared, 0));
+			return(free_all(&shared, 3));
 	} 
 	i = -1;
 	if (philo_create(&shared))
@@ -233,6 +229,11 @@ int main(int argc, char **argv)
 	pthread_join(print_t, NULL);
 	i = -1;
 	while (++i < shared.p_count)
+	{
 		pthread_mutex_destroy(&shared.fork[i]);
+		pthread_mutex_destroy(&shared.thr[i].e_lock);
+		pthread_mutex_destroy(&shared.thr[i].p_lock);
+	}
+	free_all(&shared, 4);
 	return (0);
 }
