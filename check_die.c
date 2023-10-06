@@ -1,5 +1,13 @@
 #include "philosophers.h"
 
+int	one_philo(t_shr_data *shared)
+{
+	printf("0	1 is taken a fork\n");
+	usleep(shared->t_die * 1000);
+	printf("%d	1 is died\n", shared->t_die);
+	return (0);
+}
+
 void	wait(t_shr_data *s)
 {
 	int	i;

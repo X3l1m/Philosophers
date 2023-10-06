@@ -74,10 +74,10 @@ int	main(int argc, char **argv)
 	int			err;
 	t_shr_data	shared;
 
-	if (argc != 5 && argc != 6)
-		return (printf("Wrong input!\n"));
-	if (!input_init(&shared, argv, argc))
-		return (printf("Invalid Number!\n"));
+	if ((argc != 5 && argc != 6) || !input_init(&shared, argv, argc))
+		return (printf("Wrong input\n"));
+	if (shared.p_count == 1)
+		return (one_philo(&shared));
 	if (free_all(&shared, make_malloc(&shared), 0) >= 0)
 		return (printf("!!!make malloc failed!!!\n"));
 	if (mutex_create(&shared))

@@ -62,6 +62,5 @@ void	*philo_thread(void *arg)
 	if (thread->id % 2)
 		s_sleep(thread->shr->t_eat / 2);
 	philo_loop(thread);
-	thread->shr->end = 1;
 	return (NULL);
 }

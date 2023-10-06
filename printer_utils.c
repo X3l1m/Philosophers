@@ -11,6 +11,7 @@ int	find_node(t_shr_data *shared)
 			i = 0;
 		if (shared->thr[i].p_head)
 			break ;
+		usleep(100);
 		i++;
 	}
 	return (i);
@@ -63,7 +64,7 @@ void	print_min(t_shr_data *s)
 
 	m = find_node(s);
 	m = find_min(s, m);
-	printf("%ld %d %s\n", s->thr[m].p_head->ms, \
+	printf("%ld	%d	%s\n", s->thr[m].p_head->ms, \
 		s->thr[m].p_head->id + 1, s->thr[m].p_head->msg);
 	if (*s->thr[m].p_head->msg == 'd'
 		|| check_eat(s, s->thr[m].p_head->msg, m))

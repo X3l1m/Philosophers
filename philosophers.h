@@ -45,6 +45,7 @@ typedef struct s_thr_data
 	t_shr_data			*shr;
 }				t_thr_data;
 
+int		one_philo(t_shr_data *shared);
 void	*philo_thread(void *arg);
 int		char_to_int(char *str);
 void	print_min(t_shr_data *s);
