@@ -60,5 +60,5 @@ void	*printer(void *arg)
 		usleep(1000);
 		print_min(shared);
 	}
-	pthread_exit(NULL);
+	return (NULL);
 }

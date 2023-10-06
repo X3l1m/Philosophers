@@ -1,6 +1,6 @@
 #include "philosophers.h"
 
-int	leave_fork(t_thr_data *thread, char right)
+void	leave_fork(t_thr_data *thread, char right)
 {
 	pthread_mutex_unlock(&thread->shr->fork[thread->id]);
 	if (right)
@@ -63,5 +63,5 @@ void	*philo_thread(void *arg)
 		s_sleep(thread->shr->t_eat / 2);
 	philo_loop(thread);
 	thread->shr->end = 1;
-	pthread_exit(NULL);
+	return (NULL);
 }

@@ -60,7 +60,6 @@ int	check_eat(t_shr_data *shared, char *msg, int m)
 void	print_min(t_shr_data *s)
 {
 	int		m;
-	t_print	*tmp;
 
 	m = find_node(s);
 	m = find_min(s, m);

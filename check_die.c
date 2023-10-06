@@ -7,7 +7,7 @@ void	wait(t_shr_data *s)
 	i = -1;
 	while (++i < s->p_count)
 		if (s->thr[i].l_eat == 1)
-			i = --i;
+			i--;
 }
 
 void	check_die(t_shr_data *s)
@@ -24,7 +24,7 @@ void	check_die(t_shr_data *s)
 		while (++i < s->p_count)
 		{
 			pthread_mutex_lock(&s->thr[i].e_lock);
-			if ((cur_time - s->thr[i].l_eat) > s->t_die)
+			if ((cur_time - s->thr[i].l_eat) > (size_t)s->t_die)
 			{
 				if (print(&s->thr[i], run_time(s->start_time), "died"))
 					s->end = 2;

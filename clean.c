@@ -26,7 +26,6 @@ void	mutex_clean(t_shr_data *shared)
 int	free_all(t_shr_data *shared, int step, int mutex)
 {
 	int		i;
-	t_print	*tmp;
 
 	i = -1;
 	if (mutex)
