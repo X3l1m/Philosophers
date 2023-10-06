@@ -19,7 +19,11 @@ do
 	if [ $loop -gt 1 ]; then
 		echo "Loop $(($i+1)):"
 	fi
+<<<<<<< HEAD
 	./philo $p_count $t_die $t_eat $t_sleep $must_eat
+=======
+	valgrind ./philo $p_count $t_die $t_eat $t_sleep $must_eat
+>>>>>>> d6ed31d2e24c761304728895157b86d5aebac35f
 	if [ $loop -gt $(($i+1)) ]; then
 		echo ""
 	fi
