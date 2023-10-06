@@ -10,6 +10,7 @@
 				"philosophers.c",
                 "input.c",
 				"printer.c",
+				"check_die.c",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

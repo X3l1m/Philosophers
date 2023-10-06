@@ -1,31 +1,38 @@
 #include "philosophers.h"
 
-void	check_die(t_shr_data *shared)
+void	wait(t_shr_data *s)
+{
+	int	i;
+
+	i = -1;
+	while (++i < s->p_count)
+		if (s->thr[i].l_eat == 1)
+			i = --i;
+}
+
+void	check_die(t_shr_data *s)
 {
 	int			i;
 	size_t		cur_time;
 
-	i = -1;
-	while (++i < shared->p_count)
-		if (shared->thr[i].l_eat == 1)
-			i = -1;
-	while (1)
+	wait(s);
+	while (!s->end)
 	{
 		usleep(1000);
 		i = -1;
 		cur_time = gettime();
-		while (++i < shared->p_count)
+		while (++i < s->p_count)
 		{
-			pthread_mutex_lock(& shared->thr[i].e_lock);
-			if ((cur_time - shared->thr[i].l_eat) > shared->t_die)
+			pthread_mutex_lock(&s->thr[i].e_lock);
+			if ((cur_time - s->thr[i].l_eat) > s->t_die)
 			{
-				if (print(&shared->thr[i], run_time(shared->start_time), "died"))
-					shared->end = 2;
-				shared->end = 1;
-				pthread_mutex_unlock(&shared->thr[i].e_lock);
+				if (print(&s->thr[i], run_time(s->start_time), "died"))
+					s->end = 2;
+				s->end = 1;
+				pthread_mutex_unlock(&s->thr[i].e_lock);
 				return ;
 			}
-			pthread_mutex_unlock(&shared->thr[i].e_lock);
+			pthread_mutex_unlock(&s->thr[i].e_lock);
 		}
 	}
 }
