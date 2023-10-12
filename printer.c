@@ -7,7 +7,7 @@ t_print	*new_node(int id, size_t time, char *str)
 	new = malloc(sizeof(t_print));
 	if (!new)
 	{
-		printf("Malloc fail!\n %s\n", str);
+		printf("Malloc fail: %ld %d %s\n", time, id, str);
 		return (NULL);
 	}
 	new->ms = time;

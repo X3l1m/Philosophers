@@ -20,10 +20,7 @@ int	philo_create(t_shr_data *s)
 		if (pthread_create(&s->thread_id[i], NULL, philo_thread, &s->thr[i]))
 			return (i + 1);
 	}
-	i = -1;
-	while (s->p_count > ++i)
-		if (s->thr[i].l_eat != 1)
-			i--;
+	wait(s, 0);
 	if (pthread_create(&s->print_t, NULL, printer, s))
 		return (s->p_count + 1);
 	s->start_time = gettime();

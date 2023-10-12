@@ -59,5 +59,6 @@ void	check_die(t_shr_data *shared);
 void	free_node(t_print **node);
 int		free_all(t_shr_data *shared, int step, int mutex);
 void	mutex_clean(t_shr_data *shared);
+void	wait(t_shr_data *s, int a);
 
 #endif

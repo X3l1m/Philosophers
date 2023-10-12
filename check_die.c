@@ -8,14 +8,20 @@ int	one_philo(t_shr_data *shared)
 	return (0);
 }
 
-void	wait(t_shr_data *s)
+void	wait(t_shr_data *s, int a)
 {
 	int	i;
 
 	i = -1;
 	while (++i < s->p_count)
-		if (s->thr[i].l_eat == 1)
+	{
+		if ((s->thr[i].l_eat == 1 && a)
+			|| (s->thr[i].l_eat != 1 && !a))
+		{
 			i--;
+			usleep(1000);
+		}
+	}
 }
 
 void	check_die(t_shr_data *s)
@@ -23,11 +29,11 @@ void	check_die(t_shr_data *s)
 	int			i;
 	size_t		cur_time;
 
-	wait(s);
+	wait(s, 1);
 	while (!s->end)
 	{
-		usleep(1000);
 		i = -1;
+		usleep(1000);
 		cur_time = gettime();
 		while (++i < s->p_count)
 		{
