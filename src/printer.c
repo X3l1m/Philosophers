@@ -38,16 +38,14 @@ int	add_node(t_thr_data *thread, size_t time, char *str)
 
 int	print(t_thr_data *thread, size_t time, char *str)
 {
+	int	err;
+
 	if (thread->shr->end)
 		return (0);
 	pthread_mutex_lock(&thread->p_lock);
-	if (add_node(thread, time, str))
-	{
-		pthread_mutex_unlock(&thread->p_lock);
-		return (1);
-	}
+	err = add_node(thread, time, str);
 	pthread_mutex_unlock(&thread->p_lock);
-	return (0);
+	return (err);
 }
 
 void	*printer(void *arg)
