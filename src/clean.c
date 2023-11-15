@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 void	free_node(t_print **node)
 {

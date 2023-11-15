@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 void	leave_fork(t_thr_data *thread, char right)
 {

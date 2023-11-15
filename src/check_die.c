@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 int	one_philo(t_shr_data *shared)
 {

@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 size_t	gettime(void)
 {

@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 void	philo_join(t_shr_data *shared, int count)
 {

@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 t_print	*new_node(int id, size_t time, char *str)
 {

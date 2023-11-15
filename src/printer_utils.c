@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include <philosophers.h>
 
 int	find_node(t_shr_data *shared)
 {
