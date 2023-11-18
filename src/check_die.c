@@ -8,20 +8,15 @@ int	one_philo(t_shr_data *shared)
 	return (0);
 }
 
-void	wait(t_shr_data *s, int a)
+int	check_end(t_shr_data *s, int end)
 {
-	int	i;
-
-	i = -1;
-	while (++i < s->p_count)
-	{
-		if ((s->thr[i].l_eat == 1 && a)
-			|| (s->thr[i].l_eat != 1 && !a))
-		{
-			i--;
-			usleep(1000);
-		}
-	}
+	pthread_mutex_lock(&s->fork[s->p_count]);
+	if (end)
+		s->end = end;
+	else
+		end = s->end;
+	pthread_mutex_unlock(&s->fork[s->p_count]);
+	return (end);
 }
 
 void	check_die(t_shr_data *s)
@@ -29,11 +24,9 @@ void	check_die(t_shr_data *s)
 	int			i;
 	size_t		cur_time;
 
-	wait(s, 1);
-	while (!s->end)
+	while (!check_end(s, 0))
 	{
 		i = -1;
-		usleep(1000);
 		cur_time = gettime();
 		while (++i < s->p_count)
 		{
@@ -41,12 +34,13 @@ void	check_die(t_shr_data *s)
 			if ((cur_time - s->thr[i].l_eat) > (size_t)s->t_die)
 			{
 				if (print(&s->thr[i], run_time(s->start_time), "died"))
-					s->end = 2;
-				s->end = 1;
+					check_end(s, 2);
+				check_end(s, 1);
 				pthread_mutex_unlock(&s->thr[i].e_lock);
 				return ;
 			}
 			pthread_mutex_unlock(&s->thr[i].e_lock);
 		}
+		usleep(1000);
 	}
 }

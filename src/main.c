@@ -20,10 +20,12 @@ int	philo_create(t_shr_data *s)
 		if (pthread_create(&s->thread_id[i], NULL, philo_thread, &s->thr[i]))
 			return (i + 1);
 	}
-	wait(s, 0);
 	if (pthread_create(&s->print_t, NULL, printer, s))
 		return (s->p_count + 1);
 	s->start_time = gettime();
+	i = 0;
+	while (s->p_count > i)
+		s->thr[i++].l_eat = s->start_time;
 	pthread_mutex_unlock(&s->fork[s->p_count]);
 	return (0);
 }
@@ -82,7 +84,7 @@ int	main(int argc, char **argv)
 	err = philo_create(&shared);
 	if (err)
 	{
-		shared.end = 2;
+		check_end(&shared, 2);
 		pthread_mutex_unlock(&shared.fork[shared.p_count]);
 		philo_join(&shared, err - 1);
 		printf("Phillo error at %d\n", err - 1);

@@ -1,21 +1,21 @@
 #include <philosophers.h>
 
-void	leave_fork(t_thr_data *thread, char right)
+void	leave_fork(t_thr_data *thread, bool right)
 {
-	pthread_mutex_unlock(&thread->shr->fork[thread->id]);
+	pthread_mutex_unlock(&thread->shr->fork[thread->right]);
 	if (right)
-		pthread_mutex_unlock(&thread->shr->fork[thread->right]);
+		pthread_mutex_unlock(&thread->shr->fork[thread->id]);
 }
 
 int	take_forks(t_thr_data *thread)
 {
-	pthread_mutex_lock(&thread->shr->fork[thread->id]);
+	pthread_mutex_lock(&thread->shr->fork[thread->right]);
 	if (print(thread, run_time(thread->shr->start_time), "is taken a fork"))
 	{
 		leave_fork(thread, 0);
 		return (1);
 	}
-	pthread_mutex_lock(&thread->shr->fork[thread->right]);
+	pthread_mutex_lock(&thread->shr->fork[thread->id]);
 	if (print(thread, run_time(thread->shr->start_time), "is taken a fork"))
 	{
 		leave_fork(thread, 1);
@@ -26,7 +26,7 @@ int	take_forks(t_thr_data *thread)
 
 void	philo_loop(t_thr_data *thread)
 {
-	while (!thread->shr->end)
+	while (!check_end(thread->shr, 0))
 	{
 		if (take_forks(thread))
 			return ;
@@ -54,11 +54,9 @@ void	*philo_thread(void *arg)
 
 	thread = (t_thr_data *)arg;
 	thread->right = (thread->id + 1) % thread->shr->p_count;
-	thread->l_eat = 1;
 	thread->eated = 0;
 	pthread_mutex_lock(&thread->shr->fork[thread->shr->p_count]);
 	pthread_mutex_unlock(&thread->shr->fork[thread->shr->p_count]);
-	thread->l_eat = thread->shr->start_time;
 	if (thread->id % 2)
 		s_sleep(thread->shr->t_eat / 2);
 	philo_loop(thread);

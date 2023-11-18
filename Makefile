@@ -1,7 +1,7 @@
 NAME	= philo
 
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -I./
+CFLAGS	= -Wall -Werror -Wextra -pthread -g -fsanitize=thread -I./
 COMPILE = $(CC) $(CFLAGS)
 
 RM		= rm -f
@@ -15,7 +15,7 @@ OBJ		= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@echo $@ redy.
+	@echo $@ ready.
 	@$(COMPILE) $(OBJ) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c

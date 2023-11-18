@@ -40,7 +40,7 @@ int	print(t_thr_data *thread, size_t time, char *str)
 {
 	int	err;
 
-	if (thread->shr->end)
+	if (check_end(thread->shr, 0))
 		return (0);
 	pthread_mutex_lock(&thread->p_lock);
 	err = add_node(thread, time, str);
@@ -53,7 +53,7 @@ void	*printer(void *arg)
 	t_shr_data	*shared;
 
 	shared = (t_shr_data *)arg;
-	while (shared->end < 2)
+	while (check_end(shared, 0) < 2)
 	{
 		usleep(1000);
 		print_min(shared);
