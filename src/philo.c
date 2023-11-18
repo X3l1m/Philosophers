@@ -2,20 +2,20 @@
 
 void	leave_fork(t_thr_data *thread, bool right)
 {
-	pthread_mutex_unlock(&thread->shr->fork[thread->right]);
+	pthread_mutex_unlock(&thread->shr->fork[thread->id]);
 	if (right)
-		pthread_mutex_unlock(&thread->shr->fork[thread->id]);
+		pthread_mutex_unlock(&thread->shr->fork[thread->right]);
 }
 
 int	take_forks(t_thr_data *thread)
 {
-	pthread_mutex_lock(&thread->shr->fork[thread->right]);
+	pthread_mutex_lock(&thread->shr->fork[thread->id]);
 	if (print(thread, run_time(thread->shr->start_time), "is taken a fork"))
 	{
 		leave_fork(thread, 0);
 		return (1);
 	}
-	pthread_mutex_lock(&thread->shr->fork[thread->id]);
+	pthread_mutex_lock(&thread->shr->fork[thread->right]);
 	if (print(thread, run_time(thread->shr->start_time), "is taken a fork"))
 	{
 		leave_fork(thread, 1);

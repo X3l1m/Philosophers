@@ -1,7 +1,7 @@
 NAME	= philo
 
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -pthread -g -fsanitize=thread -I./
+CFLAGS	= -Wall -Werror -Wextra -pthread -g -I./
 COMPILE = $(CC) $(CFLAGS)
 
 RM		= rm -f

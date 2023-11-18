@@ -29,10 +29,12 @@ int	find_min(t_shr_data *s, size_t ms)
 	int	m;
 
 	i = -1;
+	m = -1;
 	while (++i < s->p_count)
 	{
 		pthread_mutex_lock(&s->thr[i].p_lock);
-		if (s->thr[i].p_head && s->thr[i].p_head->ms <= ms)
+		if (s->thr[i].p_head && (s->thr[i].p_head->ms < ms
+				|| (s->thr[i].p_head->ms == ms && m == -1)))
 		{
 			ms = s->thr[i].p_head->ms;
 			m = i;
