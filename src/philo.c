@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   philo.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: seyildir <seyildir@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/12/20 14:16:39 by seyildir      #+#    #+#                 */
+/*   Updated: 2023/12/20 14:16:39 by seyildir      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <philosophers.h>
 
 void	leave_fork(t_thr_data *thread, bool right)
